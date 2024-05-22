@@ -9,5 +9,5 @@ jobs:
   call-cdk-job:
     uses: ./.github/workflows/cdk.yml
     with:
-      ref: ${{ gihub.ref }}
+      ref: ${{ github.ref }}
 
