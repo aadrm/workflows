@@ -1,3 +1,11 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   first_job:
+    runs-on: ubuntu-latest
     name: first job
