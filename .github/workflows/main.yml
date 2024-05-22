@@ -6,9 +6,8 @@ on:
       - main
 
 jobs:
-  first_job:
-    runs-on: ubuntu-latest
-   
-    steps:
-      - name: first job
-        run: (ls)
+  call-cdk-job:
+    uses: ./.github/workflows/cdk.yml
+    with:
+      ref: ${{ gihub.ref }}
+
