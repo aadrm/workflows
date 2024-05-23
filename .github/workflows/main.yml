@@ -23,8 +23,7 @@ jobs:
           else
             echo "::set-output name=cdk_modified::true"
           fi
-
-jobs:
+          
   call-cdk-job:
     needs: check-cdk-changes
     if: needs.check-cdk-changes.outputs.cdk-modified == 'true'
