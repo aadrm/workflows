@@ -11,17 +11,15 @@ jobs:
     with:
       ref: ${{ github.ref }}
 
-jobs:
   call-src-job:
     uses: ./.github/workflows/src.yml
     with:
-      ref: ${{ gihub.ref }}
+      ref: ${{ github.ref }}
 
-jobs:
-  call-src-job:
+  call-deploy-job:
     needs: [call-cdk-job, call-src-job]
 
     uses: ./.github/workflows/src.yml
     with:
-      ref: ${{ gihub.ref }}
+      ref: ${{ github.ref }}
 
