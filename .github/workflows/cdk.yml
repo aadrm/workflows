@@ -8,7 +8,6 @@ on:
         type: string
 
 jobs:
-  paths-filter
   first_job:
     runs-on: ubuntu-latest
    
