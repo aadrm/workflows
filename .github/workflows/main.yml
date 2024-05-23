@@ -47,6 +47,7 @@ jobs:
 
   call-deploy-job:
     needs: [call-cdk-job, call-src-job]
+    if: always() && needs.call-cdk-job.result == 'success' && needs.call-src-job.result == 'success'
     uses: ./.github/workflows/deploy.yml
     with:
       ref: ${{ github.ref }}
