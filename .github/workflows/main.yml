@@ -9,7 +9,7 @@ jobs:
   check-cdk-changes:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.filter.outputs.workflows }}
+      output1: ${{ steps.filter.outputs.cdk-modified }}
     steps:
     - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v3
@@ -20,11 +20,17 @@ jobs:
             - 'cdk/**'
 
     - name: cdk changs
-      if: steps.filter.outputs.workflows == 'true'
+      if: steps.filter.outputs.cdk-modified == 'true'
+
       run: echo "Workflow file"
 
     - name: not cdk changes
-      if: steps.filter.outputs.workflows != 'true'
+      if: steps.filter.outputs.cdk-modified != 'true'
       run: echo "Workflow file"
 
-
+  call-cdk-job:
+    needs: check-cdk-changes
+    if: needs.check-cdk-changes.outputs.cdk-modified == 'true'
+    uses: ./.github/workflows/cdk.yml
+    with:
+      ref: ${{ github.ref }}
