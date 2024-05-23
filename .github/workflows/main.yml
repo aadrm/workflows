@@ -44,3 +44,9 @@ jobs:
     uses: ./.github/workflows/src.yml
     with:
       ref: ${{ github.ref }}
+
+  call-deploy-job:
+    needs: [call-cdk-job, call-src-job]
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ github.ref }}
