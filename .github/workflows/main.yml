@@ -9,14 +9,14 @@ jobs:
   check-cdk-changes:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.filter.outputs.cdk-modified }}
+      cdk-modified: ${{ steps.filter.outputs.cdk-modified }}
     steps:
     - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v3
       id: filter
       with:
         filters: |
-          workflows:
+          cdk-modified:
             - 'cdk/**'
 
     - name: cdk changs
