@@ -27,21 +27,4 @@ jobs:
       if: steps.filter.outputs.workflows != 'true'
       run: echo "Workflow file"
 
-next-jobs:
-  call-cdk-job:
-    uses: ./.github/workflows/cdk.yml
-    with:
-      ref: ${{ github.ref }}
-
-  call-src-job:
-    uses: ./.github/workflows/src.yml
-    with:
-      ref: ${{ github.ref }}
-
-  call-deploy-job:
-    needs: [call-cdk-job, call-src-job]
-
-    uses: ./.github/workflows/src.yml
-    with:
-      ref: ${{ github.ref }}
 
