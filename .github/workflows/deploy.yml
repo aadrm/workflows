@@ -1,4 +1,4 @@
-name: CDK Job
+name: Deploy Job
 
 on:
   workflow_call:
@@ -6,11 +6,10 @@ on:
       ref:
         required: true
 
-
 jobs:
   first_job:
     runs-on: ubuntu-latest
    
     steps:
-      - name: runs on changes 
+      - name: runs after job
         run: (ls)

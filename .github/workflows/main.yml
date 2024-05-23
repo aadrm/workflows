@@ -11,3 +11,17 @@ jobs:
     with:
       ref: ${{ gihub.ref }}
 
+jobs:
+  call-src-job:
+    uses: ./.github/workflows/src.yml
+    with:
+      ref: ${{ gihub.ref }}
+
+jobs:
+  call-src-job:
+    needs: [call-cdk-job, call-src-job]
+
+    uses: ./.github/workflows/src.yml
+    with:
+      ref: ${{ gihub.ref }}
+

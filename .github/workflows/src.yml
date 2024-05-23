@@ -1,4 +1,4 @@
-name: CDK Job
+name: SRC Job
 
 on:
   workflow_call:
@@ -12,5 +12,5 @@ jobs:
     runs-on: ubuntu-latest
    
     steps:
-      - name: runs on changes 
+      - name: always runs job
         run: (ls)
