@@ -9,24 +9,26 @@ jobs:
   check-cdk-changes:
     runs-on: ubuntu-latest
     outputs:
-      cdk-modified: ${{ steps.check.outputs.cdk_modified }}
+      output1: ${{ steps.filter.outputs.workflows }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          workflows:
+            - 'cdk/**'
 
-      - name: Check if CDK folder is modified
-        id: check
-        run: |
-          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep '^cdk/')
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "::set-output name=cdk_modified::false"
-          else
-            echo "::set-output name=cdk_modified::true"
-          fi
-          
+    - name: cdk changs
+      if: steps.filter.outputs.workflows == 'true'
+      run: echo "Workflow file"
+
+    - name: not cdk changes
+      if: steps.filter.outputs.workflows != 'true'
+      run: echo "Workflow file"
+
+next-jobs:
   call-cdk-job:
-    needs: check-cdk-changes
-    if: needs.check-cdk-changes.outputs.cdk-modified == 'true'
     uses: ./.github/workflows/cdk.yml
     with:
       ref: ${{ github.ref }}
