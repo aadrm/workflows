@@ -6,7 +6,28 @@ on:
       - main
 
 jobs:
+  check-cdk-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      cdk-modified: ${{ steps.check.outputs.cdk_modified }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check if CDK folder is modified
+        id: check
+        run: |
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep '^cdk/')
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "::set-output name=cdk_modified::false"
+          else
+            echo "::set-output name=cdk_modified::true"
+          fi
+
+jobs:
   call-cdk-job:
+    needs: check-cdk-changes
+    if: needs.check-cdk-changes.outputs.cdk-modified == 'true'
     uses: ./.github/workflows/cdk.yml
     with:
       ref: ${{ github.ref }}
