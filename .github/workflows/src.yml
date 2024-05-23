@@ -5,7 +5,7 @@ on:
     inputs:
       ref:
         required: true
-
+        type: string
 
 jobs:
   first_job:
